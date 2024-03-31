@@ -68,12 +68,12 @@ def aber_circular(Z):
     return (2*j1(Z) / Z)**2
 
 
-x1 = np.linspace(-0.25, 0.25, 5000)
-x2 = np.linspace(-0.25, 0.25, 5000)
-x3 = np.linspace(-0.3, 0.3, 5000) 
-y1 = np.linspace(-0.25, 0.25, 5000)
-y2 = np.linspace(-0.25, 0.25, 5000)
-y3 = np.linspace(-0.3, 0.3, 5000)   
+x1 = np.linspace(-0.40, 0.40, 2000)
+x2 = np.linspace(-0.40, 0.40, 2000)
+x3 = np.linspace(-0.55, 0.55, 2000) 
+y1 = np.linspace(-0.40, 0.40, 2000)
+y2 = np.linspace(-0.45, 0.45, 2000)
+y3 = np.linspace(-0.55, 0.55, 2000)   
 x, y = np.meshgrid(x3, y3)
 
 
@@ -82,9 +82,9 @@ k1 = 2 * np.pi / lam1
 k2 = 2 * np.pi / lam2
 k3 = 2 * np.pi / lam3
 
-Z1 = k1 * a * np.sqrt(x**2 + y**2)/R
-Z2 = k2 * a * np.sqrt(x**2 + y**2)/R
-Z3 = k3 * a * np.sqrt(x**2 + y**2)/R
+Z1 = k1 * a/2 * np.sqrt(x**2 + y**2)/R
+Z2 = k2 * a/2 * np.sqrt(x**2 + y**2)/R
+Z3 = k3 * a/2 * np.sqrt(x**2 + y**2)/R
 
 
 # Cálculo de los valores de la función para Z1, Z2, Z3
@@ -94,7 +94,7 @@ values3 = aber_circular(Z3)
 
 
 def segundo_max(R, k, x):
-    x= 8.46*R/(k*a)
+    x= 8.46*R/(k*a/2)
     return x
     
 max_400 = segundo_max(R, k1, x)
