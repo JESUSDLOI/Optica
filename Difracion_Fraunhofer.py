@@ -182,7 +182,7 @@ if abertura == "0":
     # Creación del primer subplot 3D
     ax1 = fig.add_subplot(121, projection='3d')
     ax1.plot_surface(X, Y, valores, cmap=color, norm=norm)
-    ax1.set_title('Abertura circular de' + str(lado) + 'mm: Longitud de onda de' + str(lam) + 'm' )
+    ax1.set_title('Abertura circular de {:.2e}mm: Longitud de onda de {:.2e}m'.format(lado1, lado2, lam))
     ax1.set_xlabel('X m')
     ax1.set_ylabel('Y m')
     ax1.set_zlabel('Intensidad en la pantalla')
@@ -190,25 +190,25 @@ if abertura == "0":
     # Creación del primer subplot 2D
     ax4 = fig.add_subplot(122)
     ax4.contourf(X, Y, valores, cmap=color, levels=np.arange(z_min, z_max, step), norm=norm)  # Ajusta los niveles según la sección del eje z que quieras mostrar
-    ax4.set_title('Abertura circular de' + str(lado) + 'mm: Longitud de onda de' + str(lam) + 'm' )
+    ax4.set_title('Abertura circular de {:.2e}mm: Longitud de onda de {:.2e}m'.format(lado1, lado2, lam))
     ax4.set_xlabel('X m')
     ax4.set_ylabel('Y m')
     
 elif abertura == "1":
     # Creación del primer subplot 3D
-    ax1 = fig.add_subplot(121, projection='3d')
-    ax1.plot_surface(X, Y, valores, cmap=color, norm=norm)
-    ax1.set_title('Abertura rectangular de' + str(lado1) +'mm' +' x' + str(lado2) + 'mm: Longitud de onda de' + str(lam) + 'm' )
-    ax1.set_xlabel('X m')
-    ax1.set_ylabel('Y m')
-    ax1.set_zlabel('Intensidad en la pantalla')
+    ax2 = fig.add_subplot(121, projection='3d')
+    ax2.plot_surface(X, Y, valores, cmap=color, norm=norm)
+    ax2.set_title('Abertura rectangular de {:.2e}mm x {:.2e}mm: Longitud de onda de {:.2e}m'.format(lado1, lado2, lam))
+    ax2.set_xlabel('X m')
+    ax2.set_ylabel('Y m')
+    ax2.set_zlabel('Intensidad en la pantalla')
 
     # Creación del primer subplot 2D
-    ax4 = fig.add_subplot(122)
-    ax4.contourf(X, Y, valores, cmap=color, levels=np.arange(z_min, z_max, step), norm=norm)  # Ajusta los niveles según la sección del eje z que quieras mostrar
-    ax4.set_title('Abertura rectangular de' + str(lado1) +'mm' +' x' + str(lado2) + 'mm: Longitud de onda de' + str(lam) + 'm' )
-    ax4.set_xlabel('X m')
-    ax4.set_ylabel('Y m')
+    ax5 = fig.add_subplot(122)
+    ax5.contourf(X, Y, valores, cmap=color, levels=np.arange(z_min, z_max, step), norm=norm)  # Ajusta los niveles según la sección del eje z que quieras mostrar
+    ax5.set_title('Abertura rectangular de {:.2e}mm x {:.2e}mm: Longitud de onda de {:.2e}m'.format(lado1, lado2, lam))
+    ax5.set_xlabel('X m')
+    ax5.set_ylabel('Y m')
 
 
 # Mostrar el gráfico1
