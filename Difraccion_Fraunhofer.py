@@ -32,11 +32,13 @@ def Fresnel(a, lam, R):
 
 
 #Instrucciones para el usuario
-
+print("Autor: Jesús de la Oliva Iglesias\n")
 print("---------------------------------------------------------\n")
 print("Programa para visualizar la difracción de Fraunhöfer de una abertura circular o rectangular\n")
 print("---------------------------------------------------------\n")
-
+print("Instrucciones:\n")
+print("Introduce números enteros o decimales con punto '.' y no coma ','\n")
+print("Si no se visualiza bien la figura, se recomienda cambiar el tamaño de la pantalla al ejecutar el programa\n")
 
 #Pedir al usuario el tipo de abertura
 
@@ -182,7 +184,7 @@ if abertura == "0":
     # Creación del primer subplot 3D
     ax1 = fig.add_subplot(121, projection='3d')
     ax1.plot_surface(X, Y, valores, cmap=color, norm=norm)
-    ax1.set_title('Abertura circular de {:.2e}mm: Longitud de onda de {:.2e}m'.format(lado1, lado2, lam))
+    ax1.set_title('Abertura circular de {:.2e}mm: Longitud de onda de {:.2e}m'.format(lado, lam))
     ax1.set_xlabel('X m')
     ax1.set_ylabel('Y m')
     ax1.set_zlabel('Intensidad en la pantalla')
@@ -190,7 +192,7 @@ if abertura == "0":
     # Creación del primer subplot 2D
     ax4 = fig.add_subplot(122)
     ax4.contourf(X, Y, valores, cmap=color, levels=np.arange(z_min, z_max, step), norm=norm)  # Ajusta los niveles según la sección del eje z que quieras mostrar
-    ax4.set_title('Abertura circular de {:.2e}mm: Longitud de onda de {:.2e}m'.format(lado1, lado2, lam))
+    ax4.set_title('Abertura circular de {:.2e}mm: Longitud de onda de {:.2e}m'.format(lado, lam))
     ax4.set_xlabel('X m')
     ax4.set_ylabel('Y m')
     
