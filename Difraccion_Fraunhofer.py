@@ -13,9 +13,6 @@ from mpl_toolkits.mplot3d import Axes3D
 from scipy.special import j1
 from scipy.signal import argrelextrema
 
-#Insturcciones para el usuario
-
-
 class ExpNorm(Normalize):
     def __init__(self, vmin=None, vmax=None, clip=False, gamma=1.0):
         Normalize.__init__(self, vmin, vmax, clip)
