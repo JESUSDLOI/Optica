@@ -32,11 +32,14 @@ def Fresnel(a, lam, R):
 
 
 #Instrucciones para el usuario
-
+print("Autor: Jesús de la Oliva Iglesias\n")
 print("---------------------------------------------------------\n")
 print("Programa para visualizar la difracción de Fraunhöfer de una abertura circular o rectangular\n")
 print("---------------------------------------------------------\n")
-
+print("Instrucciones:\n")
+print("Introduce los datos usando solo números y en caso de decimales, usar el punto '.' y no la coma ','\n")
+print("El taaño de la pantalla hay que ir ajustándolo haciemndo varias ejecuciones hata obtener el tamaño deseado según el caso\n")
+print("Si la aproximación de Fresnel es mayor a 10^(-3) el programa termina la ejecución\n")
 
 #Pedir al usuario el tipo de abertura
 
@@ -86,7 +89,7 @@ if abertura == "0":
         exit()
     
 elif abertura == "1":
-    print("Has elegido una abertura rectangular, introduce los datos\n")
+    print("\nHas elegido una abertura rectangular, introduce los datos\n")
     
     #Pedir datos al usuario
     lado1 = float(input("\nIntroduce el lado del eje x de la abertura en milímetros: "))
@@ -102,7 +105,7 @@ elif abertura == "1":
     print("\nEl número de fresnel es: ", F)
     
     if F <= 1*10**-3:
-        print("La aproximación de Fresnel es válida\n")
+        print("\nLa aproximación de Fresnel es válida")
         
         #Tamaño de la pantalla
         l = float(input("\nIntroduce el lado del tamaño de la pantalla en metros (se recomienda ser inferior a 1 y mayor a 0.1): "))
@@ -182,7 +185,7 @@ if abertura == "0":
     # Creación del primer subplot 3D
     ax1 = fig.add_subplot(121, projection='3d')
     ax1.plot_surface(X, Y, valores, cmap=color, norm=norm)
-    ax1.set_title('Abertura circular de {:.2e}mm: Longitud de onda de {:.2e}m'.format(lado1, lado2, lam))
+    ax1.set_title('Abertura circular de {:.2e}mm: Longitud de onda de {:.2e}m'.format(lado, lam))
     ax1.set_xlabel('X m')
     ax1.set_ylabel('Y m')
     ax1.set_zlabel('Intensidad en la pantalla')
@@ -190,7 +193,7 @@ if abertura == "0":
     # Creación del primer subplot 2D
     ax4 = fig.add_subplot(122)
     ax4.contourf(X, Y, valores, cmap=color, levels=np.arange(z_min, z_max, step), norm=norm)  # Ajusta los niveles según la sección del eje z que quieras mostrar
-    ax4.set_title('Abertura circular de {:.2e}mm: Longitud de onda de {:.2e}m'.format(lado1, lado2, lam))
+    ax4.set_title('Abertura circular de {:.2e}mm: Longitud de onda de {:.2e}m'.format(lado, lam))
     ax4.set_xlabel('X m')
     ax4.set_ylabel('Y m')
     
