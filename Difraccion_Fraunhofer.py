@@ -27,6 +27,33 @@ def Fresnel(a, lam, R):
     F = a**2 / (lam * R)
     return F
 
+def abertura_circular():
+        print("\nHas elegido una abertura circular, introduce los datos")
+        
+        #Pedir datos al usuario
+        lado = float(input("\nIntroduce el diámtro de la abertura en milímtros: "))
+        a = lado * 10**-3
+        longitud = float(input("\nIntroduce la longitud de onda en nanómetros: "))
+        lam = longitud * 10**-9
+        R = float(input("\nIntroduce la distancia de la rendija al plano de observación en metros: "))
+        F= Fresnel(a, lam, R)
+        return F, a, lam, R, lado
+
+def abertura_rectangular():
+    print("\nHas elegido una abertura rectangular, introduce los datos")
+    
+    #Pedir datos al usuario
+    lado1 = float(input("\nIntroduce el lado del eje x de la abertura en milímetros: "))
+    a = lado1 * 10**-3
+    lado2 = float(input("\nIntroduce el lado del eje y de la abertura en milímetros: "))
+    b = lado2 * 10**-3
+    longitud = float(input("\nIntroduce la longitud de onda en nanómetros: "))
+    lam = longitud * 10**-9
+    R = float(input("\nIntroduce la distancia de la rendija al plano de observación en metros: "))
+    diagonal = np.sqrt(a**2 + b**2)
+    F= Fresnel(diagonal, lam, R)
+    return F, a, b, lam, R, lado1, lado2
+
 
 #Instrucciones para el usuario
 print("Autor: Jesús de la Oliva Iglesias\n")
@@ -43,20 +70,24 @@ abertura = input("\nIntroduce el tipo de abertura circular(0) o rectangular(1): 
 
 
 #Elegir el tipo de abertura
+while abertura != "0" and abertura != "1":
+   print("\nNo has introducido un tipo de abertura válido, vuelve a intentarlo\n")
+   abertura = input("\nIntroduce el tipo de abertura circular(0) o rectangular(1): ")
 
 if abertura == "0":
-    print("\nHas elegido una abertura circular, introduce los datos")
-    
+
     #Pedir datos al usuario
-    lado = float(input("\nIntroduce el diámtro de la abertura en milímtros: "))
-    a = lado/2 * 10**-3
-    longitud = float(input("\nIntroduce la longitud de onda en nanómetros: "))
-    lam = longitud * 10**-9
-    R = float(input("\nIntroduce la distancia de la rendija al plano de observación en metros: "))
-    F= Fresnel(a, lam, R)
+    F, a, lam, R, lado = abertura_circular()
+
+    while F > 1*10**-3:
+        print("\nEl número de fresnel es: ", F)
+        print("\nLa aproximación de Fresnel no es adecuada para este caso de Frauhofer")
+        print("\nPor favor, vuelve a introducir los datos\n")
+        F, a, lam, R, lado = abertura_circular()
     
-    print("\nEl número de fresnel es: ", F)
+    
     if F <= 1*10**-3:
+        print("\nEl número de fresnel es: ", F)
         print("\nLa aproximación de Fresnel es válida")
         
         #Tamaño de la pantalla
@@ -80,27 +111,21 @@ if abertura == "0":
         
         #Valores de la intensidad de difracción de Fraunhöfer en pantalla
         valores = aber_circular(Z)
-    else:
-        print("\nLa aproximación de Fresnel no es adecuada para este caso de Frauhofer")
-        exit()
     
 elif abertura == "1":
-    print("Has elegido una abertura rectangular, introduce los datos\n")
-    
+
     #Pedir datos al usuario
-    lado1 = float(input("\nIntroduce el lado del eje x de la abertura en milímetros: "))
-    a = lado1/2 * 10**-3
-    lado2 = float(input("\nIntroduce el lado del eje y de la abertura en milímetros: "))
-    b = lado2/2 * 10**-3
-    longitud = float(input("\nIntroduce la longitud de onda en nanómetros: "))
-    lam = longitud * 10**-9
-    R = float(input("\nIntroduce la distancia de la rendija al plano de observación en metros: "))
-    diagonal = np.sqrt(a**2 + b**2)
-    F= Fresnel(diagonal, lam, R)
+    F, a, b, lam, R, lado1, lado2 = abertura_rectangular()
     
-    print("\nEl número de fresnel es: ", F)
+    while F > 1*10**-3:
+        print("\nEl número de fresnel es: ", F)
+        print("\nLa aproximación de Fresnel no es adecuada para este caso de Frauhofer")
+        print("\nPor favor, vuelve a introducir los datos\n")
+        F, a, b, lam, R, lado1, lado2 = abertura_rectangular()
+   
     
     if F <= 1*10**-3:
+        print("\nEl número de fresnel es: ", F)
         print("La aproximación de Fresnel es válida\n")
         
         #Tamaño de la pantalla
@@ -130,16 +155,6 @@ elif abertura == "1":
         
         valores = aber_rectangular(arg1) * aber_rectangular(arg2)
         
-        
-    else:
-        print("La aproximación de Fresnel no es adecuada para este caso de Frauhofer\n")
-        exit()
-
-
-else:
-    print("No has introducido un tipo de abertura válido, vuelve a intentarlo\n")
-    
-    exit()
 
 
 #Recomendación 
@@ -212,5 +227,3 @@ elif abertura == "1":
 
 # Mostrar el gráfico1
 plt.show()
-
-
