@@ -31,11 +31,39 @@ def abertura_circular():
         print("\nHas elegido una abertura circular, introduce los datos")
         
         #Pedir datos al usuario
-        lado = float(input("\nIntroduce el diámtro de la abertura en milímtros: "))
-        a = lado * 10**-3
-        longitud = float(input("\nIntroduce la longitud de onda en nanómetros: "))
-        lam = longitud * 10**-9
-        R = float(input("\nIntroduce la distancia de la rendija al plano de observación en metros: "))
+        while True:
+            try:
+                lado = input("\nIntroduce el diámetro de la abertura en milímetros: ")
+                if not lado.replace('.', '').isdigit() or ',' in lado:
+                    print("Por favor, introduce un número válido, si es decimal, con un punto '.' en lugar de una coma ','")
+                    continue
+                lado = float(lado)
+                a = lado * 10**-3
+                break
+            except ValueError:
+                print("Por favor, introduce un número válido.")
+        while True:
+            try:
+                longitud = input("\nIntroduce la longitud de onda en nanómetros: ")
+                if not longitud.replace('.', '').isdigit() or ',' in longitud:
+                    print("Por favor, introduce un número válido, si es decimal, con un punto '.' en lugar de una coma ','")
+                    continue
+                longitud = float(longitud)
+                lam = longitud * 10**-9
+                break
+            except ValueError:
+                print("Por favor, introduce un número válido.")
+    
+        while True:
+            try:
+                R = input("\nIntroduce la distancia de la abertura a la pantalla en metros: ")
+                if not R.replace('.', '').isdigit() or ',' in R:
+                    print("Por favor, introduce un número válido, si es decimal, con un punto '.' en lugar de una coma ','")
+                    continue
+                R = float(R)
+                break
+            except ValueError:
+                print("Por favor, introduce un número válido.")
         F= Fresnel(a, lam, R)
         return F, a, lam, R, lado
 
@@ -43,13 +71,52 @@ def abertura_rectangular():
     print("\nHas elegido una abertura rectangular, introduce los datos")
     
     #Pedir datos al usuario
-    lado1 = float(input("\nIntroduce el lado del eje x de la abertura en milímetros: "))
-    a = lado1 * 10**-3
-    lado2 = float(input("\nIntroduce el lado del eje y de la abertura en milímetros: "))
-    b = lado2 * 10**-3
-    longitud = float(input("\nIntroduce la longitud de onda en nanómetros: "))
-    lam = longitud * 10**-9
-    R = float(input("\nIntroduce la distancia de la rendija al plano de observación en metros: "))
+    while True:
+        try:
+            lado1 = input("\nIntroduce el lado del eje x de la abertura en milímetros: ")
+            if ',' in lado1 or not lado1.replace('.', '').isdigit():
+                print("Por favor, introduce un número válido, si es decimal, con un punto '.' en lugar de una coma ','")
+                continue
+            lado1 = float(lado1)
+            a = lado1 * 10**-3
+            break
+        except ValueError:
+            print("Por favor, introduce un número válido.")    
+
+    while True:
+        try:
+            lado2 = input("\nIntroduce el lado del eje y de la abertura en milímetros: ")
+            if not lado2.replace('.', '').isdigit() or ',' in lado2:
+                print("Por favor, introduce un número válido, si es decimal, con un punto '.' en lugar de una coma ','")
+                continue
+            lado2 = float(lado2)
+            b = lado2 * 10**-3
+            break
+        except ValueError:
+            print("Por favor, introduce un número válido.")
+
+    while True:
+        try:
+            longitud = input("\nIntroduce la longitud de onda en nanómetros: ")
+            if not longitud.replace('.', '').isdigit() or ',' in longitud:
+                print("Por favor, introduce un número válido, si es decimal, con un punto '.' en lugar de una coma ','")
+                continue
+            longitud = float(longitud)
+            lam = longitud * 10**-9
+            break
+        except ValueError:
+            print("Por favor, introduce un número válido.")
+    
+    while True:
+        try:
+            R = input("\nIntroduce la distancia de la abertura a la pantalla en metros: ")
+            if not R.replace('.', '').isdigit() or ',' in R:
+                print("Por favor, introduce un número válido, si es decimal, con un punto '.' en lugar de una coma ','")
+                continue
+            R = float(R)
+            break
+        except ValueError:
+            print("Por favor, introduce un número válido.")
     diagonal = np.sqrt(a**2 + b**2)
     F= Fresnel(diagonal, lam, R)
     return F, a, b, lam, R, lado1, lado2
@@ -61,8 +128,11 @@ print("---------------------------------------------------------\n")
 print("Programa para visualizar la difracción de Fraunhöfer de una abertura circular o rectangular\n")
 print("---------------------------------------------------------\n")
 print("Instrucciones:\n")
+print("El número de Fresnell límite establecido para la visualización es de 0.05\n")
+print("Si el número de Fresnell es mayor, nos resulta en un patrón de difracción de menos de un centímetro de ancho, y complicaría la visualización en el laboratorio\n")
 print("Introduce números enteros o decimales con punto '.' y no coma ','\n")
-print("Si no se visualiza bien la figura, se recomienda cambiar el tamaño de la pantalla al ejecutar el programa\n")
+print("Si no se visualiza bien la figura, se recomienda cambiar el tamaño de la pantalla al ejecutar el programa")
+print("\nPresiona 'Ctrl + C' para cerrar el programa en cualquier momento\n")
 
 #Pedir al usuario el tipo de abertura
 
@@ -79,21 +149,29 @@ if abertura == "0":
     #Pedir datos al usuario
     F, a, lam, R, lado = abertura_circular()
 
-    while F > 1*10**-3:
+    while F > 5*10**-2:
         print("\nEl número de fresnel es: ", F)
         print("\nLa aproximación de Fresnel no es adecuada para este caso de Frauhofer")
         print("\nPor favor, vuelve a introducir los datos\n")
         F, a, lam, R, lado = abertura_circular()
     
     
-    if F <= 1*10**-3:
+    if F <= 5*10**-2:
         print("\nEl número de fresnel es: ", F)
         print("\nLa aproximación de Fresnel es válida")
         
         #Tamaño de la pantalla
         l = 0.4
-        l = float(input("\nIntroduce el lado del tamaño de la pantalla en metros(se recomienda ser inferior a 1 y mayor a 0.1): "))
-        
+        while True:
+            try:
+                l = input("\nIntroduce el lado de la pantalla de visualización en metros(se recomiendan valores entre 0.1 y 1): ")
+                if not l.replace('.', '').isdigit() or ',' in l:
+                    print("Por favor, introduce un número válido, si es decimal, con un punto '.' en lugar de una coma ','")
+                    continue
+                l = float(l)
+                break
+            except ValueError:
+                print("Por favor, introduce un número válido.")
         #Definir el rango de la pantalla para el plot
         x = np.linspace(-l, l, 5000)
         y = np.linspace(-l, l, 5000)
@@ -117,20 +195,29 @@ elif abertura == "1":
     #Pedir datos al usuario
     F, a, b, lam, R, lado1, lado2 = abertura_rectangular()
     
-    while F > 1*10**-3:
+    while F > 5*10**-2:
         print("\nEl número de fresnel es: ", F)
         print("\nLa aproximación de Fresnel no es adecuada para este caso de Frauhofer")
         print("\nPor favor, vuelve a introducir los datos\n")
         F, a, b, lam, R, lado1, lado2 = abertura_rectangular()
    
     
-    if F <= 1*10**-3:
+    if F <= 5*10**-2:
         print("\nEl número de fresnel es: ", F)
         print("La aproximación de Fresnel es válida\n")
         
         #Tamaño de la pantalla
-        l = float(input("\nIntroduce el lado del tamaño de la pantalla en metros (se recomienda ser inferior a 1 y mayor a 0.1): "))
-        
+        l = 0.4
+        while True:
+            try:
+                l = input("\nIntroduce el lado de la pantalla de visualización en metros(se recomiendan valores entre 0.1 y 1): ")
+                if not l.replace('.', '').isdigit() or ',' in l:
+                    print("Por favor, introduce un número válido, si es decimal, con un punto '.' en lugar de una coma ','")
+                    continue
+                l = float(l)
+                break
+            except ValueError:
+                print("Por favor, introduce un número válido.")
         #Definir el rango de la pantalla para el plot
         x = np.linspace(-l, l, 2000)
         y = np.linspace(-l, l, 2000)
@@ -158,6 +245,8 @@ elif abertura == "1":
 
 
 #Recomendación 
+print("\nPresiona 'Ctrl + C' para cerrar el programa")
+print("\nPreparando visualización de la difracción de Fraunhöfer...")
 print("\nSi se visualiza mal la figura, se recomienda cambiar el tamaño de la pantalla al ejecutar el programa")
 
 # Diccionario de colores orientativos para la longitud de onda en el espectro visible
